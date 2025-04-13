@@ -1,5 +1,10 @@
-import { IHttpClient } from '../interfaces/httpClient.interface.js';
-import { CreateProductDto, ProductDto, ProductListDto, ProductsQueryParams } from '../../types/product.js';
+import { IHttpClient } from "../interfaces/httpClient.interface.js";
+import {
+  CreateProductDto,
+  ProductDto,
+  ProductListDto,
+  ProductsQueryParams,
+} from "../../types/product.js";
 
 /**
  * 제품 서비스 인터페이스
@@ -28,7 +33,6 @@ export interface IProductService {
 
 /**
  * 제품 서비스 구현체
- * HTTP 클라이언트에 의존성 주입을 통해 구체적인 구현에 의존하지 않음 (DIP)
  */
 export class ProductService implements IProductService {
   /**
@@ -43,13 +47,17 @@ export class ProductService implements IProductService {
    */
   async getProducts(params?: ProductsQueryParams): Promise<ProductListDto> {
     try {
-      return await this.httpClient.get<ProductListDto>('/products', {
+      return await this.httpClient.get<ProductListDto>("/products", {
         page: params?.page || 1,
         limit: params?.limit || 10,
         search: params?.search,
       });
     } catch (error) {
-      throw new Error(`제품 목록 조회 실패: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `제품 목록 조회 실패: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
     }
   }
 
@@ -62,7 +70,11 @@ export class ProductService implements IProductService {
     try {
       return await this.httpClient.get<ProductDto>(`/products/${id}`);
     } catch (error) {
-      throw new Error(`제품 상세 조회 실패: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `제품 상세 조회 실패: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
     }
   }
 
@@ -73,9 +85,13 @@ export class ProductService implements IProductService {
    */
   async createProduct(productData: CreateProductDto): Promise<ProductDto> {
     try {
-      return await this.httpClient.post<ProductDto>('/products', productData);
+      return await this.httpClient.post<ProductDto>("/products", productData);
     } catch (error) {
-      throw new Error(`제품 생성 실패: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `제품 생성 실패: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
     }
   }
 
@@ -85,10 +101,12 @@ export class ProductService implements IProductService {
    */
   async testConnection(): Promise<string> {
     try {
-      await this.httpClient.get<{ items: any[] }>('/products', { limit: 1 });
-      return '연결 성공: 제품 API 서버가 정상적으로 응답하고 있습니다.';
+      await this.httpClient.get<{ items: any[] }>("/products", { limit: 1 });
+      return "연결 성공: 제품 API 서버가 정상적으로 응답하고 있습니다.";
     } catch (error) {
-      return `연결 실패: ${error instanceof Error ? error.message : String(error)}`;
+      return `연결 실패: ${
+        error instanceof Error ? error.message : String(error)
+      }`;
     }
   }
 }

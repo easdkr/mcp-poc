@@ -1,7 +1,7 @@
 import { Server as McpServer } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { IMcpServer } from "../interfaces/mcpServer.interface.js";
 import { AppConfig } from "../../config/config.js";
+import { Transport } from "@modelcontextprotocol/sdk/shared/transport.js";
 
 /**
  * MCP 서버 구현체
@@ -45,7 +45,7 @@ export class McpServerImpl implements IMcpServer {
   /**
    * 서버 시작
    */
-  async start(transport: StdioServerTransport): Promise<void> {
+  async start(transport: Transport): Promise<void> {
     await this.server.connect(transport);
   }
 }
